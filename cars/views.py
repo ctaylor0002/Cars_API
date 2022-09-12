@@ -37,7 +37,7 @@ def car_detail(request, pk):
 
   '''
 # This does the same as the View function above but with less code
-@api_view(['GET', 'PUT'])
+@api_view(['GET', 'PUT', 'DELETE'])
 def car_detail(request, pk):
     car = get_object_or_404(Car, pk=pk)
     if request.method == 'GET':
@@ -48,4 +48,6 @@ def car_detail(request, pk):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return Response(serializer.data)
-
+    elif request.method == 'DELETE':
+        car.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
